@@ -453,73 +453,75 @@
         </header>
         <main>
             <div id="Grille_about">
-            <div class="album py-5 bg-light">
-                <div class="container">
-                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                        <c:forEach items="${produits}" var="produit" varStatus="status">
-                            <div class="col"  >
-                                <div class="card shadow-sm">
-                                    <img src="<c:url value='assets/img/portfolio/p${status.count}.jpeg'/>" width="100%" height="225px" alt="changement images non valide"/>
-                                    <div class="card-body">
-                                        <p class="card-text"><c:out value="${produit.getLibelle()}"/> </p>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="btn-group">
-                                                <button type="Submit" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modif${produit.getId()}">
-                                                    Modifier
-                                                </button>
-                                                <button  class="btn btn-sm btn-outline-secondary">
-                                                    <a href="Sup?id=${produit.id}" style="text-decoration: none;
-                                                       text-decoration: none;
-                                                       list-style-type: none;
-                                                       color: #6c757d;">Supprimer</a>
-                                                </button>
-                                            </div>
-                                            <form action="Modif" method="POST">  <div class="modal fade" id="modif${produit.getId()}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title align-items-center" id="exampleModalLabel">Zone Modification</h5>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <div class="blank"></div>
-                                                                <div class="blank"></div>
-                                                                <p>Libelle Produit:</p>
-                                                                <input type="text" class="P" name="libelle" value="${produit.getLibelle()}">
-                                                                <div class="blank"></div>
-                                                                <div class="blank"></div>
-                                                                <p>Prix Produit:</p>
-                                                                <input type="text" class="P" name="prix" value="${produit.getPrix()}">
-                                                                <div class="blank"></div>
-                                                                <div class="blank"></div>
-                                                                <p>Quantité Produit:</p>
-                                                                <input type="text" class="P" name="qte" value="${produit.getQuantite()}">
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="submit" name="modif" value="${produit.id}"  class="btn btn-primary">Modifier</button> 
-                                                            </div>
-                                                        </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                                <small class="text-muted"> ${produit.prix} Dhs </small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </c:forEach>
-                        <div class="col" >
-                            <div class="card shadow-sm">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group" id="AjoutBTN" >
-                                            <button  type="submit"  id="btn" class="btn btn-sm btn-outline-secondary" onclick="visible()"><img src="assets/img/portfolio/add1.png" width="100px" height="auto"/></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+           		<div class="album py-5 bg-light">
+	                <div class="container">
+	                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+	                        <c:forEach items="${produits}" var="produit" varStatus="status">
+	                            <div class="col"  >
+	                                <div class="card shadow-sm">
+	                                    <img src="<c:url value='assets/img/portfolio/p${status.count}.jpeg'/>" width="100%" height="225px" alt="changement images non valide"/>
+	                                    <div class="card-body">
+	                                        <p class="card-text"><c:out value="${produit.getLibelle()}"/> </p>
+	                                        <div class="d-flex justify-content-between align-items-center">
+	                                            <div class="btn-group">
+	                                                <button type="Submit" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modif${produit.getId()}">
+	                                                    Modifier
+	                                                </button>
+	                                                <button  class="btn btn-sm btn-outline-secondary">
+	                                                    <a href="Sup?id=${produit.id}" style="text-decoration: none;
+	                                                       text-decoration: none;
+	                                                       list-style-type: none;
+	                                                       color: #6c757d;">Supprimer</a>
+	                                                </button>
+	                                            </div>
+	                                            <form action="Modif" method="POST">  <div class="modal fade" id="modif${produit.getId()}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	                                                    <div class="modal-dialog">
+	                                                        <div class="modal-content">
+	                                                            <div class="modal-header">
+	                                                                <h5 class="modal-title align-items-center" id="exampleModalLabel">Zone Modification</h5>
+	                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	                                                            </div>
+	                                                            <div class="modal-body">
+	                                                                <div class="blank"></div>
+	                                                                <div class="blank"></div>
+	                                                                <p>Libelle Produit:</p>
+	                                                                <input type="text" class="P" name="libelle" value="${produit.getLibelle()}">
+	                                                                <div class="blank"></div>
+	                                                                <div class="blank"></div>
+	                                                                <p>Prix Produit:</p>
+	                                                                <input type="text" class="P" name="prix" value="${produit.getPrix()}">
+	                                                                <div class="blank"></div>
+	                                                                <div class="blank"></div>
+	                                                                <p>Quantité Produit:</p>
+	                                                                <input type="text" class="P" name="qte" value="${produit.getQuantite()}">
+	                                                            </div>
+	                                                            <div class="modal-footer">
+	                                                                <button type="submit" name="modif" value="${produit.id}"  class="btn btn-primary">Modifier</button> 
+	                                                            </div>
+	                                                        </div>
+	                                                        </form>
+	                                                    </div>
+	                                                </div>
+	                                                <small class="text-muted"> ${produit.prix} Dhs </small>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </c:forEach>
+	                        <div class="col" >
+	                            <div class="card shadow-sm">
+	                                <div class="card-body">
+	                                    <div class="d-flex justify-content-between align-items-center">
+	                                        <div class="btn-group" id="AjoutBTN" >
+	                                            <button  type="submit"  id="btn" class="btn btn-sm btn-outline-secondary" onclick="visible()"><img src="assets/img/portfolio/add1.png" width="100px" height="auto"/></button>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
+                
+                
                 </div>
             </div>
             

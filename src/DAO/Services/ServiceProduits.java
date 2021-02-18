@@ -20,10 +20,6 @@ import DAO.Interface.interfaceProduitsDAO;
  */
 public class ServiceProduits implements interfaceProduitsDAO{
     
-    
-    
-    
-    
      @Override
     public ArrayList<produit> AfficherTout() throws SQLException{
          ArrayList<produit> ListeProduits = new ArrayList<produit>();
@@ -64,6 +60,7 @@ public class ServiceProduits implements interfaceProduitsDAO{
 
             if(rs.next()) {
                 p.setId(rs.getInt(1));
+                p.setVote(0);
             }
             ps.close();
             ps2.close();
@@ -123,50 +120,30 @@ public class ServiceProduits implements interfaceProduitsDAO{
     }
 
     @Override
-    public void voterProduit(int id) throws SQLException {
-       produit p = recupererProduitParID(id);
+    public void voterProduit(int produit_id,int user_id) throws SQLException {
+
        Connection connection = Singleton.getConnection();
-       if(p!=null){
-            try {
-            String requette = "UPDATE public.\"Produit\" SET \"nombre_vote\"=? WHERE \"id_Produit\"="+id;
-            PreparedStatement s = connection.prepareStatement(requette);
-            //s.setInt(1,p.getNbrVote()+1);
-            //System.out.println(p.getNbrVote()+1);
-            s.executeUpdate();
-            
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
+
+       try {
+    	   
+           PreparedStatement ps = connection.prepareStatement("INSERT INTO public.\"Vote\" (\"id_Utilisateur\", \"id_Produit\") VALUES (?, ?);");
+           ps.setInt(1,user_id);
+           ps.setInt(2, produit_id);
+           ps.executeUpdate();
+           
+           ps.close();
+
+       } catch (SQLException e) {
+           e.printStackTrace();
        }
-       else     
-           System.out.println("Produit Introuvable");
+
+
     }
     
-     @Override
-    public produit recupererPlusVotes() throws SQLException {
-        ArrayList<produit> liste = this.AfficherTout();
-        //int max = 0;
-        produit produitPlusVote = null;
-        for(produit p : liste){
-            //if(p.getNbrVote()>= max){
-              //  max = p.getNbrVote();
-                produitPlusVote = p;   
-            //}  
-            
-        }
+    
 
-        return produitPlusVote;
-    }
-
-    @Override
-    public void seLoguer() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void sIdentifier() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 
    
     

@@ -3,9 +3,11 @@ package com.servlet;
 
 import DAO.Services.ServiceProduits;
 import DAO.Services.ServiceUtilisateurs;
+import DAO.Services.ServiceVote;
 
 import com.beans.produit;
 import com.beans.utilisateur;
+
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -18,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.catalina.Session;
+
 
 
 
@@ -32,6 +34,7 @@ public class servlet extends HttpServlet{
     
     ServiceProduits serviceP = new ServiceProduits();
     ServiceUtilisateurs serviceU = new ServiceUtilisateurs();
+    ServiceVote serviceV = new ServiceVote();
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String path = req.getServletPath();
@@ -78,9 +81,15 @@ public class servlet extends HttpServlet{
 				}
 				if(session.getAttribute("Session_USER")!=null || session.getAttribute("Session_ADMIN")!=null ) {
                	     ArrayList<produit> produits1;
+               	     ArrayList<produit> produits2;
+               	     produit produitPlusVotes = null;
 					try {
-						produits1 = serviceP.AfficherTout();
+						produits1 = serviceV.recupereVoteDesProduits();
+						produitPlusVotes = serviceV.recupererPlusVotes();
+						produits2 = serviceP.AfficherTout();
+						
 						req.setAttribute("produits", produits1);
+						req.setAttribute("ProduitPlusVotes",produitPlusVotes);
 		                req.getRequestDispatcher(Page).forward(req, resp);
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
@@ -127,6 +136,7 @@ public class servlet extends HttpServlet{
 			}
             
         }
+        
    }
         
 
@@ -186,6 +196,21 @@ public class servlet extends HttpServlet{
             }
             else
             	req.getRequestDispatcher("/login.jsp").forward(req, resp);
-        	}
-    }
+        }
+        else if (path.equals("/voter")) {
+        	HttpSession session = req.getSession(true);
+        	int id_produit= Integer.parseInt(req.getParameter("produit"));
+        	utilisateur user = (utilisateur) session.getAttribute("Session_USER");
+        	
+        	int id_user = user.getId();
+        	
+        	try {
+				serviceP.voterProduit(id_produit, id_user);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        }
+        
+     }
  }

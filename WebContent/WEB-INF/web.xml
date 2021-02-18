@@ -80,7 +80,7 @@
         <url-pattern>/ajouterProduit</url-pattern>
     </servlet-mapping>
     
-     <servlet>
+    <servlet>
         <servlet-name>Ajouter_Utilisateur</servlet-name>
         <servlet-class>com.servlet.servlet</servlet-class>
     </servlet>
@@ -90,6 +90,17 @@
         <url-pattern>/ajouterUser</url-pattern>
     </servlet-mapping>
     
+    
+    
+    <servlet>
+        <servlet-name>Voter</servlet-name>
+        <servlet-class>com.servlet.servlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Voter</servlet-name>
+        <url-pattern>/voter</url-pattern>
+    </servlet-mapping>
     
     
     
