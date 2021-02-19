@@ -10,5 +10,6 @@ public interface interfaceVoteDAO {
 	
 	public produit recupererPlusVotes() throws SQLException;
 	public ArrayList<produit> recupereVoteDesProduits() throws SQLException;
+	public int recuperVoteProduit(int id) throws SQLException;
 	
 }

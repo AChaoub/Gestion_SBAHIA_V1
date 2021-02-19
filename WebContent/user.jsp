@@ -171,7 +171,7 @@
 			width: 1920px;
 			height: 243px;
 			left: 0px;
-			top: 1604px;
+			top: 1704px;
 			overflow: hidden;
 		}
 
@@ -422,7 +422,7 @@
 			width: 200px;
 			height: 204px;
 			left: 479px;
-			top: 800px;
+			top: 900px;
 			overflow: visible;
 		}
 #VOTE_ {
@@ -486,7 +486,7 @@
 	width: 1723px;
 	height: 440px;
 	left: 118px;
-	top: 1145px;
+	top: 1200px;
 	overflow: hidden;
 }
 #Grille_de_rptition_21_0 {
@@ -580,10 +580,10 @@
 }
 #Le_produit_le_plus_slectionns_ {
 	left: 469px;
-	top: 1020px;
+	top: 1120px;
 	position: absolute;
 	overflow: visible;
-	width: 1022px;
+	width: 1122px;
 	white-space: nowrap;
 	text-align: left;
 	font-family: Montserrat;
@@ -632,22 +632,26 @@
 	                <div class="container">
 	                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 	                        <c:forEach items="${produits}" var="produit" varStatus="status">
-	                          <form action="voter" method="get">
+	                          
 	                            <div class="col">
 	                                <div class="card shadow-sm">
 	                                    <img src="<c:url value="assets/img/portfolio/p${status.count}.jpeg"/>" width="100%" height="225px" alt="changement images non valide"/>
 	                                    <div class="card-body">
 	                                        <p class="card-text"><c:out value="${produit.getLibelle()}"/> </p>
 	                                        <div class="d-flex justify-content-between align-items-center">
-	                                            <div class="btn-group" name="produit" value="${produit.getId()}">
-	                                                <button type="Submit" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal">  Voter  </button>
+	                                        <form action="voter" method="post">
+	                                            <div class="btn-group">
+	                                            	<input type="hidden" name="id_produit" value="${produit.getId()}"/>
+	                                            	<input type="hidden" name="id_user" value="${Session_USER.getId()}"/>
+	                                                <button  type="submit" class="btn btn-sm btn-outline-secondary" >  Voter  </button>
 	                                            </div>
-	                                                <small class="text-muted"> Nombre Des votes : <c:out value="${produit.getVote()}"/> </small>
+	                                        </form>    
+	                                                <small class="text-muted"> Nombre Des votes : ${nbrVotes.get(status.index)}  </small>
 	                                        </div>
 	                                    </div>
 	                                </div>
 	                            </div>
-	                          </form>
+	                          
 	                        </c:forEach> 
 	                    </div>   
                 	</div>
@@ -679,7 +683,7 @@
 				<span><c:out value="${ProduitPlusVotes.getLibelle()}"/> </span>
 			</div>
 			<div id="Nombre_des_votes________122">
-				<span>Nombre des votes:        <c:out value="${ProduitPlusVotes.getVote()}"/></span>
+				<span>Nombre des votes:  ${maxVotes}</span>
 			</div>
 			<div id="Prix_unitaire___150_Dhs">
 				<span>Prix unitaire :  <c:out value="${ProduitPlusVotes.getPrix()}"/> Dhs</span>

@@ -60,7 +60,7 @@ public class ServiceProduits implements interfaceProduitsDAO{
 
             if(rs.next()) {
                 p.setId(rs.getInt(1));
-                p.setVote(0);
+
             }
             ps.close();
             ps2.close();

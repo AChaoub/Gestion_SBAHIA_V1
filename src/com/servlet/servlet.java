@@ -80,15 +80,32 @@ public class servlet extends HttpServlet{
 					e.printStackTrace();
 				}
 				if(session.getAttribute("Session_USER")!=null || session.getAttribute("Session_ADMIN")!=null ) {
-               	     ArrayList<produit> produits1;
-               	     ArrayList<produit> produits2;
+               	     ArrayList<produit> produits1;          	         
                	     produit produitPlusVotes = null;
 					try {
-						produits1 = serviceV.recupereVoteDesProduits();
+						
+						produits1 = serviceP.AfficherTout();
 						produitPlusVotes = serviceV.recupererPlusVotes();
-						produits2 = serviceP.AfficherTout();
+						ArrayList<Integer> __Listscountsvotes = new ArrayList<Integer>();
+						
+						//recuperer nbr votes de l'ensemble des produits
+						for(produit p : produits1) {
+							int c = serviceV.recuperVoteProduit(p.getId());
+							 __Listscountsvotes.add(c);
+						}
+						
+						// recupertion du produit le plus votees
+						int max =0;
+						for(int maxVotes : __Listscountsvotes) {
+							if(maxVotes >= max) {
+								max = maxVotes;
+							}
+						}
 						
 						req.setAttribute("produits", produits1);
+						req.setAttribute("nbrVotes", __Listscountsvotes);
+						req.setAttribute("maxVotes", max);
+						
 						req.setAttribute("ProduitPlusVotes",produitPlusVotes);
 		                req.getRequestDispatcher(Page).forward(req, resp);
 					} catch (SQLException e) {
@@ -136,6 +153,48 @@ public class servlet extends HttpServlet{
 			}
             
         }
+        else if (path.equals("/voter")) {
+        	//HttpSession session = req.getSession(true);
+        	String id_produit=req.getParameter("id_produit");
+        	String id_user= req.getParameter("id_user");
+        	ArrayList<produit> produits1;          	         
+      	    produit produitPlusVotes = null;
+        	//utilisateur user = (utilisateur) session.getAttribute("Session_USER");
+        	//int id_user = user.getId();
+        	
+        	try {
+				serviceP.voterProduit(Integer.parseInt(id_produit), Integer.parseInt(id_user));
+				produits1 = serviceP.AfficherTout();
+				produitPlusVotes = serviceV.recupererPlusVotes();
+				ArrayList<Integer> __Listscountsvotes = new ArrayList<Integer>();
+				
+				//recuperer nbr votes de l'ensemble des produits
+				for(produit p : produits1) {
+					int c = serviceV.recuperVoteProduit(p.getId());
+					 __Listscountsvotes.add(c);
+				}
+				
+				// recupertion du produit le plus votees
+				int max =0;
+				for(int maxVotes : __Listscountsvotes) {
+					if(maxVotes >= max) {
+						max = maxVotes;
+					}
+				}
+				
+				req.setAttribute("produits", produits1);
+				req.setAttribute("nbrVotes", __Listscountsvotes);
+				req.setAttribute("maxVotes", max);
+				
+				req.setAttribute("ProduitPlusVotes",produitPlusVotes);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	req.getRequestDispatcher("/user.jsp").forward(req, resp);
+        	
+        }
+        
         
    }
         
@@ -197,20 +256,10 @@ public class servlet extends HttpServlet{
             else
             	req.getRequestDispatcher("/login.jsp").forward(req, resp);
         }
-        else if (path.equals("/voter")) {
-        	HttpSession session = req.getSession(true);
-        	int id_produit= Integer.parseInt(req.getParameter("produit"));
-        	utilisateur user = (utilisateur) session.getAttribute("Session_USER");
-        	
-        	int id_user = user.getId();
-        	
-        	try {
-				serviceP.voterProduit(id_produit, id_user);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-        }
+        
+        
+        
+        
         
      }
  }

@@ -6,7 +6,7 @@ public class produit {
        private String libelle;
        private int prix;
        private int quantite;
-       private int vote;
+
 
 
     public produit(int id, String libelle, int prix, int quantite) {
@@ -14,16 +14,13 @@ public class produit {
         this.libelle = libelle;
         this.prix = prix;
         this.quantite = quantite;
-        this.vote = this.getVote();
-        
-   
+     
     }
 
     public produit(String libelle, int prix, int quantite) {
         this.libelle = libelle;
         this.prix = prix;
         this.quantite = quantite;
-        this.vote = this.getVote();
     }
 
     public int getId() {
@@ -62,17 +59,9 @@ public class produit {
     
     
 
-    public int getVote() {
-		return vote;
-	}
-
-	public void setVote(int vote) {
-		this.vote = vote;
-	}
 
 	@Override
 	public String toString() {
-		return "produit [id=" + id + ", libelle=" + libelle + ", prix=" + prix + ", quantite=" + quantite + ", vote="
-				+ vote + "]";
+		return "produit [id=" + id + ", libelle=" + libelle + ", prix=" + prix + ", quantite=" + quantite  + "]";
 	}
 }
